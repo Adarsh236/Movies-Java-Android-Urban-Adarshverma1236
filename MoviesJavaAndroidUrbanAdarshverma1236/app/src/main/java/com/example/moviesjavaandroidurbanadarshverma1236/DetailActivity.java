@@ -26,17 +26,15 @@ import java.util.Objects;
 
 
 public class DetailActivity extends AppCompatActivity {
-    TextView Aname, plotSynopsis, userRating, releaseDate;
-
+    TextView Aname, Apopularity, Avote, Aadult, Aoriginallanguage, Avoteaverage, Aoverview, AreleaseDate;
     ImageView imageView;
 
     private FavoriteDbHelper favoriteDbHelper;
     private final AppCompatActivity activity = DetailActivity.this;
-
     private SQLiteDatabase mDb;
 
     Movies mMovies;
-    String thumbnail, Bname, synopsis, rating, dateOfRelease;
+    String thumbnail, Bname, Bpopularity, Bvote, Badult, Boriginallanguage, Bvoteaverage, Boverview, BreleaseDate;
     int movie_id;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -55,9 +53,13 @@ public class DetailActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.thumbnail_image_header);
         Aname = findViewById(R.id.title);
-        plotSynopsis = findViewById(R.id.plotsynopsis);
-        userRating = findViewById(R.id.userrating);
-        releaseDate = findViewById(R.id.releasedate);
+        Apopularity = findViewById(R.id.popularity);
+        Avote = findViewById(R.id.vote);
+        Aadult = findViewById(R.id.adult);
+        Aoriginallanguage = findViewById(R.id.originallanguage);
+        Avoteaverage = findViewById(R.id.voteaverage);
+        Aoverview = findViewById(R.id.overview);
+        AreleaseDate = findViewById(R.id.releasedate);
 
         Intent intentThatStartedThisActivity = getIntent();
         if (intentThatStartedThisActivity.hasExtra("movies")) {
@@ -67,9 +69,13 @@ public class DetailActivity extends AppCompatActivity {
             assert mMovies != null;
             thumbnail = mMovies.getPosterPath();
             Bname = mMovies.getOriginalTitle();
-            synopsis = mMovies.getOverview();
-            rating = Double.toString(mMovies.getVoteAverage());
-            dateOfRelease = mMovies.getReleaseDate();
+            Bpopularity = String.valueOf(mMovies.getPopularity());
+            Bvote = Double.toString(mMovies.getVoteCount());
+            Badult = String.valueOf(mMovies.isAdult());
+            Boriginallanguage = mMovies.getOriginalLanguage();
+            Bvoteaverage = Double.toString(mMovies.getVoteAverage());
+            Boverview = mMovies.getOverview();
+            BreleaseDate = mMovies.getReleaseDate();
             movie_id = mMovies.getId();
 
             String poster = "https://image.tmdb.org/t/p/w500" + thumbnail;
@@ -79,9 +85,13 @@ public class DetailActivity extends AppCompatActivity {
                     .into(imageView);
 
             Aname.setText(Bname);
-            plotSynopsis.setText(synopsis);
-            userRating.setText(rating);
-            releaseDate.setText(dateOfRelease);
+            Apopularity.setText(Bpopularity);
+            Avote.setText(Bvote);
+            Aadult.setText(Badult);
+            Aoriginallanguage.setText(Boriginallanguage);
+            Avoteaverage.setText(Bvoteaverage);
+            Aoverview.setText(Boverview);
+            AreleaseDate.setText(BreleaseDate);
             //TODO
             ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar)).setTitle(Bname);
 
@@ -137,9 +147,14 @@ public class DetailActivity extends AppCompatActivity {
                 FavoriteContract.FavoriteEntry._ID,
                 FavoriteContract.FavoriteEntry.COLUMN_MOVIEID,
                 FavoriteContract.FavoriteEntry.COLUMN_TITLE,
-                FavoriteContract.FavoriteEntry.COLUMN_USERRATING,
-                FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH,
-                FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS
+                FavoriteContract.FavoriteEntry.COLUMN_Popularity,
+                FavoriteContract.FavoriteEntry.COLUMN_Vote_Count,
+                FavoriteContract.FavoriteEntry.COLUMN_Adult,
+                FavoriteContract.FavoriteEntry.COLUMN_Original_Language,
+                FavoriteContract.FavoriteEntry.COLUMN_Vote_Average,
+                FavoriteContract.FavoriteEntry.COLUMN_Overview,
+                FavoriteContract.FavoriteEntry.COLUMN_Release_Date,
+                FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH
 
         };
         String selection = FavoriteContract.FavoriteEntry.COLUMN_TITLE + " =?";
@@ -161,8 +176,13 @@ public class DetailActivity extends AppCompatActivity {
         favorite.setId(movie_id);
         favorite.setOriginalTitle(Bname);
         favorite.setPosterPath(thumbnail);
+        favorite.setPopularity(Double.valueOf(Bpopularity));
+        favorite.setVoteCount(Double.valueOf(Bvote));
+        favorite.setAdult(Boolean.parseBoolean(Badult));
+        favorite.setOriginalLanguage(Boriginallanguage);
         favorite.setVoteAverage(rate);
-        favorite.setOverview(synopsis);
+        favorite.setOverview(Boverview);
+        favorite.setReleaseDate(BreleaseDate);
 
         favoriteDbHelper.addFavorite(favorite);
     }

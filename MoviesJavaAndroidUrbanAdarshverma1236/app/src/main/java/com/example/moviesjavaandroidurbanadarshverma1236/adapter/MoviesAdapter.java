@@ -65,7 +65,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title);
-            userrating = view.findViewById(R.id.userrating);
+            userrating = view.findViewById(R.id.voteaverage);
             thumbnail = view.findViewById(R.id.thumbnail);
 
             view.setOnClickListener(new View.OnClickListener() {

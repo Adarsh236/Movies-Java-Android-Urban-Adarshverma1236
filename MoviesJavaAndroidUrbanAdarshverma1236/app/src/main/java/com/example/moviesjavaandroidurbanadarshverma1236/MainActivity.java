@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 pd.dismiss();
                 return;
             }
-
             Client Client = new Client();
             Service apiService =
                     Client.getClient().create(Service.class);
@@ -368,7 +367,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             mMoviesList = movies;
                             Toast.makeText(getApplicationContext(), "Rated Movies: " + "Current Page: " + LoadMorePageNumber2, Toast.LENGTH_SHORT).show();
                         }
-
 
                         @Override
                         public void onFailure(Call<MoviesResponse> call, Throwable t) {

@@ -6,54 +6,44 @@
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/activity_vertical_margin"
 
+    android:background="@mipmap/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.startsample1.MainActivity"
-    tools:showIn="@layout/activity_main"
-    android:background="@mipmap/background">
-
-
-
+    tools:context="com.example.moviesjavaandroidurbanadarshverma1236.MainActivity"
+    tools:showIn="@layout/activity_main">
 
     <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    android:clipToPadding="false"
-    android:scrollbars="vertical"
-
-    android:layout_above="@+id/linear_layouts2"/>
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linear_layouts2"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
     <LinearLayout
         android:id="@+id/linear_layouts2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        >
-    <Button
-        android:id="@+id/loadless"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"
-        android:background="@color/colorAccent"
-        android:onClick="loadless"
-        android:text="@string/previous_page" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/loadmore"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"
-        android:background="@color/colorAccent"
-        android:onClick="loadMore"
-        android:text="@string/next_page" />
+        <Button
+            android:id="@+id/loadless"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:onClick="loadless"
+            android:text="@string/previous_page" />
+
+        <Button
+            android:id="@+id/loadmore"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:onClick="loadMore"
+            android:text="@string/next_page" />
     </LinearLayout>
-
-
-
 </RelativeLayout>
