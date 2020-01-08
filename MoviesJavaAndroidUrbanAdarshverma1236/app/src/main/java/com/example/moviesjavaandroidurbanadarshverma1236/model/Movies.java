@@ -6,12 +6,10 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class Movie implements Parcelable {
-    /*------------------------------------------------------*/
-    @SerializedName("poster_path")/*----------mut be same*/
+public class Movies implements Parcelable {
+    @SerializedName("poster_path")
     private String posterPath;
     @SerializedName("adult")
     private boolean adult;
@@ -20,7 +18,7 @@ public class Movie implements Parcelable {
     @SerializedName("release_date")
     private String releaseDate;
     @SerializedName("genre_ids")
-    private List<Integer> genreIds = new ArrayList<Integer>();
+    private List<Integer> genreIds = new ArrayList<>();
     @SerializedName("id")
     private Integer id;
     @SerializedName("original_title")
@@ -40,10 +38,9 @@ public class Movie implements Parcelable {
     @SerializedName("vote_average")
     private Double voteAverage;
 
-
-    public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
-                 String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
-                 Integer voteCount, Boolean video, Double voteAverage) {
+    public Movies(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
+                  String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
+                  Integer voteCount, Boolean video, Double voteAverage) {
         this.posterPath = posterPath;
         this.adult = adult;
         this.overview = overview;
@@ -61,22 +58,11 @@ public class Movie implements Parcelable {
 
     }
 
-    public Movie() {
-
-    }//-------------------------database
-
-    // String baseImageUrl = "https://image.tmdb.org/t/p/w500";
-    public static final Comparator<Movie> BY_NAME_ALPHABETICAL = new Comparator<Movie>() {/*String[] search = {"Aladdin", };*/
-        @Override
-        public int compare(Movie movie, Movie t1) {
-
-            return movie.originalTitle.compareTo/*(t1.search);*/(t1.originalTitle);
-        }
-    };
+    public Movies() {
+    }
 
     public String getPosterPath() {
         return posterPath;
-        //return "https://image.tmdb.org/t/p/w500"+ posterPath;
     }
 
     public void setPosterPath(String posterPath) {
@@ -210,12 +196,12 @@ public class Movie implements Parcelable {
         dest.writeValue(this.voteAverage);
     }
 
-    protected Movie(Parcel in) {
+    private Movies(Parcel in) {
         this.posterPath = in.readString();
         this.adult = in.readByte() != 0;
         this.overview = in.readString();
         this.releaseDate = in.readString();
-        this.genreIds = new ArrayList<Integer>();
+        this.genreIds = new ArrayList<>();
         in.readList(this.genreIds, Integer.class.getClassLoader());
         this.id = (Integer) in.readValue(Integer.class.getClassLoader());
         this.originalTitle = in.readString();
@@ -228,15 +214,15 @@ public class Movie implements Parcelable {
         this.voteAverage = (Double) in.readValue(Double.class.getClassLoader());
     }
 
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+    public static final Creator<Movies> CREATOR = new Creator<Movies>() {
         @Override
-        public Movie createFromParcel(Parcel source) {
-            return new Movie(source);
+        public Movies createFromParcel(Parcel source) {
+            return new Movies(source);
         }
 
         @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
+        public Movies[] newArray(int size) {
+            return new Movies[size];
         }
     };
 }

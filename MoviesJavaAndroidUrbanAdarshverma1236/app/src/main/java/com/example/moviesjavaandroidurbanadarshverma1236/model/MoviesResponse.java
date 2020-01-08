@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MoviesResponse implements Parcelable {/*----------------------------change*/
+public class MoviesResponse implements Parcelable {
     @SerializedName("page")
     private int page;
     @SerializedName("results")
-    private List<Movie> results;
+    private List<Movies> results;
     @SerializedName("total_results")
     private int totalResults;
     @SerializedName("total_pages")
@@ -25,19 +25,19 @@ public class MoviesResponse implements Parcelable {/*---------------------------
         this.page = page;
     }
 
-    public List<Movie> getResults() {
+    public List<Movies> getResults() {
         return results;
     }
 
-    public List<Movie> getMovies() {
+    public List<Movies> getMovies() {
         return results;
     }
 
-    public void setResults(List<Movie> results) {
+    public void setResults(List<Movies> results) {
         this.results = results;
     }
 
-    public void setMovies(List<Movie> results) {
+    public void setMovies(List<Movies> results) {
         this.results = results;
     }
 
@@ -56,6 +56,7 @@ public class MoviesResponse implements Parcelable {/*---------------------------
     public void setTotalPages(int totalPages) {
         this.totalPages = totalPages;
     }
+
     @Override
     public int describeContents() {
         return 0;
@@ -72,9 +73,9 @@ public class MoviesResponse implements Parcelable {/*---------------------------
     public MoviesResponse() {
     }
 
-    protected MoviesResponse(Parcel in) {
+    private MoviesResponse(Parcel in) {
         this.page = in.readInt();
-        this.results = in.createTypedArrayList(Movie.CREATOR);
+        this.results = in.createTypedArrayList(Movies.CREATOR);
         this.totalResults = in.readInt();
         this.totalPages = in.readInt();
     }
@@ -90,7 +91,6 @@ public class MoviesResponse implements Parcelable {/*---------------------------
             return new MoviesResponse[size];
         }
     };
-
 
 
 }

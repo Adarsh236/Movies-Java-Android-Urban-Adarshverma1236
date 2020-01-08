@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.moviesjavaandroidurbanadarshverma1236.model.Movie;
+import com.example.moviesjavaandroidurbanadarshverma1236.model.Movies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +15,13 @@ import java.util.List;
 public class FavoriteDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "favorite.db";
-
     private static final int DATABASE_VERSION = 1;
+    private static final String LOGTAG = "FAVORITE";
 
-    public static final String LOGTAG = "FAVORITE";
-
-    SQLiteOpenHelper dbhandler;
-    SQLiteDatabase db;
+    private SQLiteOpenHelper dbhandler;
 
     public FavoriteDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    public void open() {
-        Log.i(LOGTAG, "Database Opened");
-        db = dbhandler.getWritableDatabase();
     }
 
     public void close() {
@@ -57,15 +49,15 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void addFavorite(Movie movie) {
+    public void addFavorite(Movies movies) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_MOVIEID, movie.getId());
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_TITLE, movie.getOriginalTitle());
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_USERRATING, movie.getVoteAverage());
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
-        values.put(FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS, movie.getOverview());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_MOVIEID, movies.getId());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_TITLE, movies.getOriginalTitle());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_USERRATING, movies.getVoteAverage());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH, movies.getPosterPath());
+        values.put(FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS, movies.getOverview());
 
         db.insert(FavoriteContract.FavoriteEntry.TABLE_NAME, null, values);
         db.close();
@@ -76,7 +68,7 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         db.delete(FavoriteContract.FavoriteEntry.TABLE_NAME, FavoriteContract.FavoriteEntry.COLUMN_MOVIEID + "=" + id, null);
     }
 
-    public List<Movie> getAllFavorite() {
+    public List<Movies> getAllFavorite() {
         String[] columns = {
                 FavoriteContract.FavoriteEntry._ID,
                 FavoriteContract.FavoriteEntry.COLUMN_MOVIEID,
@@ -87,7 +79,7 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
         };
         String sortOrder =
                 FavoriteContract.FavoriteEntry._ID + " ASC";
-        List<Movie> favoriteList = new ArrayList<>();
+        List<Movies> favoriteList = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -101,14 +93,14 @@ public class FavoriteDbHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Movie movie = new Movie();
-                movie.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_MOVIEID))));
-                movie.setOriginalTitle(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_TITLE)));
-                movie.setVoteAverage(Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_USERRATING))));
-                movie.setPosterPath(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH)));
-                movie.setOverview(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS)));
+                Movies movies = new Movies();
+                movies.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_MOVIEID))));
+                movies.setOriginalTitle(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_TITLE)));
+                movies.setVoteAverage(Double.parseDouble(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_USERRATING))));
+                movies.setPosterPath(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_POSTER_PATH)));
+                movies.setOverview(cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_PLOT_SYNOPSIS)));
 
-                favoriteList.add(movie);
+                favoriteList.add(movies);
 
             } while (cursor.moveToNext());
         }
